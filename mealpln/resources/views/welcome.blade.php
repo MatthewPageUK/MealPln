@@ -1,4 +1,4 @@
-@extends('layout')
+@extends('layout.page')
 @section('title')
     Welcome
 @endsection
@@ -24,18 +24,51 @@
                 <div class="title m-b-md">
                     Welcome to MealPln, a simple food and meal planner.
                 </div>
-                <h1>Todays Menu</h1>
 
-                <h2>Breakfast</h2>
-                <ul>
-                    <li>Bowl of cereal</l1>
-                    <li>Toast and jam</li>
-                    <li>Glass of juice</li>
-                    <li>Pot of tea</li>
-                </ul>
-                <h2>Lunch</h2>
+<h1>Todays Menu</h1>
+<div class="row">
+    <div class="col-sm-4">
+        <div class="card" style="">
+            <div class="card-header">
+                Breakfast
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item"><a href="#">Bowl of cereal</a></l1>
+                <li class="list-group-item">Toast and jam</li>
+                <li class="list-group-item">Glass of juice</li>
+                <li class="list-group-item">Pot of tea</li>
+            </ul>
+            <a href="d" class="btn btn-primary">Add</a> 
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div class="card" style="">
+            <div class="card-header">
+                Lunch
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item"><a href="#">Bowl of cereal</a></l1>
+                <li class="list-group-item">Toast and jam</li>
+                <li class="list-group-item">Glass of juice</li>
+                <li class="list-group-item">Pot of tea</li>
+            </ul>
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div class="card" style="">
+            <div class="card-header">
+                Dinner
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item"><a href="#">Bowl of cereal</a></l1>
+                <li class="list-group-item">Toast and jam</li>
+                <li class="list-group-item">Glass of juice</li>
+                <li class="list-group-item">Pot of tea</li>
+            </ul>
+        </div>
+    </div>
+</div>
 
-                <h2>Dinner</h2>
             </div>
         </div>
 @endsection

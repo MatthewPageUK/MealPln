@@ -1,45 +1,50 @@
-@extends('layout')
+<!-- ingredient / index.blade.php -->
+
+@extends('layout.page')
+
+@section('title')
+    Ingredients 
+@endsection
+
+@section('description')
+  List of all your ingredients for making tasty recipes
+@endsection
 
 @section('content')
-<style>
-  .uper {
-    margin-top: 40px;
-  }
-</style>
-<div class="uper">
+
   @if(session()->get('success'))
     <div class="alert alert-success">
       {{ session()->get('success') }}  
-    </div><br />
+    </div>
   @endif
+
+  <h1>
+    <span>Ingredients</span>
+    <a href="{{ route('ingredients.create')}}" class="btn btn-primary float-right">Add Ingredient</a>
+  </h1>
+
   <table class="table table-striped">
     <thead>
         <tr>
-          <td>ID</td>
-          <td>Name</td>
-          <td>Description</td>
-          <td>Price</td>
-          <td colspan="2">Action</td>
+          <th>Name</th>
+          <th>Description</th>
+          <th>Price</th>
         </tr>
     </thead>
     <tbody>
         @foreach($ingredients as $ingredient)
         <tr>
-            <td>{{$ingredient->id}}</td>
-            <td><a href="{{ route('ingredients.show',$ingredient->id)}}">{{$ingredient->name}}</a></td>
+            <td><a href="{{ route('ingredients.show', $ingredient->id) }}">{{ $ingredient->name }}</a></td>
             <td>{{$ingredient->description}}</td>
-            <td>{{$ingredient->priceperunit}}</td>
-            <td><a href="{{ route('ingredients.edit',$ingredient->id)}}" class="btn btn-primary">Edit</a></td>
-            <td>
-                <form action="{{ route('ingredients.destroy', $ingredient->id)}}" method="post">
-                  @csrf
-                  @method('DELETE')
-                  <button class="btn btn-danger" type="submit">Delete</button>
-                </form>
-            </td>
+            <td>£{{$ingredient->priceperunit}}</td>
         </tr>
         @endforeach
     </tbody>
   </table>
-<div>
+
+  <script>
+    document.querySelectorAll(".alert").forEach((alert)=>{
+      setTimeout(function() { alert.style.display = 'none' }, 2000);
+    });
+  </script>
 @endsection

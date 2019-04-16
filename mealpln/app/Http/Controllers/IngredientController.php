@@ -14,8 +14,7 @@ class IngredientController extends Controller
      */
     public function index()
     {
-        $ingredients = Ingredient::all();
-
+        $ingredients = Ingredient::orderBy('name')->get();
         return view('ingredient.index', compact('ingredients'));
     }
 
@@ -37,7 +36,13 @@ class IngredientController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'name' => 'required|max:255',
+            'description' => 'required|max:255',
+            'priceperunit' => 'required|numeric',
+        ]);
+        $ingredient = Ingredient::create($validatedData);
+        return redirect('/ingredients')->with('success', 'Ingredient was successfully saved');
     }
 
     /**
@@ -49,7 +54,6 @@ class IngredientController extends Controller
     public function show($id)
     {
         $ingredient = Ingredient::findOrFail($id);
-
         return view('ingredient.show', compact('ingredient'));
     }
 
@@ -61,7 +65,8 @@ class IngredientController extends Controller
      */
     public function edit($id)
     {
-        //
+        $ingredient = Ingredient::findOrFail($id);
+        return view('ingredient.edit', compact('ingredient'));
     }
 
     /**
@@ -73,7 +78,13 @@ class IngredientController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $validatedData = $request->validate([
+            'name' => 'required|max:255',
+            'description' => 'required|max:255',
+            'priceperunit' => 'required|numeric',
+        ]);
+        Ingredient::whereId($id)->update($validatedData);
+        return redirect('/ingredients')->with('success', 'Ingredient was successfully saved');
     }
 
     /**
@@ -84,6 +95,8 @@ class IngredientController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $ingredient = Ingredient::findOrFail($id);
+        $ingredient->delete();
+        return redirect('/ingredients')->with('success', 'Ingredient was successfully deleted');
     }
 }
