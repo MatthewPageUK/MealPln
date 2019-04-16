@@ -11,9 +11,27 @@
     <body class="pb-5">
         @include('layout.navbar')
         <div class="container mt-4">
+            @if(session()->get('success'))
+                <div class="alert alert-success">
+                    {{ session()->get('success') }}  
+                </div>
+            @endif
+            @include('layout.cruderrors')
             @yield('content')
         </div>
         @include('layout.footer')
         <script src="{{ asset('js/app.js') }}" type="text/js"></script>
+        <script>
+            document.querySelectorAll(".alert").forEach((alert)=>{
+                setTimeout(function() { alert.style.display = 'none' }, 2000);
+            });
+        </script>
+<script>
+    document.querySelectorAll(".delete").forEach((frm)=>{
+      frm.addEventListener('submit', function() {
+        if (!confirm("Delete this thing?")) event.preventDefault();
+      });
+    });
+</script>
     </body>
 </html>

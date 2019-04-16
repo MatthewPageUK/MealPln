@@ -11,6 +11,7 @@ class Recipe extends Model
     /**
      * The Ingredients of this recipe.
      * 
+     * @return Illuminate\Database\Eloquent\Collection
      */
     public function ingredients()
     {

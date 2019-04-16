@@ -96,6 +96,7 @@ class IngredientController extends Controller
     public function destroy($id)
     {
         $ingredient = Ingredient::findOrFail($id);
+        // detach
         $ingredient->delete();
         return redirect('/ingredients')->with('success', 'Ingredient was successfully deleted');
     }

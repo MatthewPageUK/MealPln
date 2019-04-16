@@ -10,6 +10,8 @@ class Ingredient extends Model
 
     /**
      * Recipes this ingredient is used in
+     * 
+     * @return Illuminate\Database\Eloquent\Collection
      */
     public function recipes() 
     {
