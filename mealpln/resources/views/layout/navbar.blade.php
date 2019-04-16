@@ -8,13 +8,13 @@
             <li class="nav-item {{ Request::is('/') ? 'active' : '' }}">
                 <a class="nav-link" href="/">Home</a>
             </li>
-            <li class="nav-item {{ Request::is('recipes') || Request::is('recipes/*') ? 'active' : '' }}">
+            <li class="nav-item {{ Request::is('weekly') || Request::is('weekly/*') ? 'active' : '' }}">
                 <a class="nav-link" href="/recipes/">Week View</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="/meals/">Meals</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item {{ Request::is('recipes') || Request::is('recipes/*') ? 'active' : '' }}">
                 <a class="nav-link" href="/recipes/">Recipes</a>
             </li>
             <li class="nav-item {{ Request::is('ingredients') || Request::is('ingredients/*') ? 'active' : '' }}">

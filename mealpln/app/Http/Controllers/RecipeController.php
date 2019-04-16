@@ -4,9 +4,43 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Recipe;
+use App\Ingredient;
 
 class RecipeController extends Controller
 {
+    /**
+     * Delete an ingredient from this recipe
+     * 
+     */
+    public function deleteIngredient(Request $request, $id)
+    {
+        $validatedData = $request->validate([
+            'ingredient' => 'required|numeric|min:1',
+        ]);
+        $recipe = Recipe::findOrFail($id);
+        $recipe->ingredients()->wherePivot('ingredient_id', '=', $validatedData['ingredient'])->detach();
+
+        return redirect()->action(
+            'RecipeController@show', ['id' => $id]
+        )->with('success', 'Ingredient was successfully deleted');
+    }
+    /**
+     * Add an ingredient to the recipe
+     * 
+     */
+    public function addIngredient(Request $request, $id)
+    {
+        $validatedData = $request->validate([
+            'ingredient' => 'required|numeric|min:1',
+            'quantity' => 'required|numeric|min:0.1',
+        ]);
+        $recipe = Recipe::findOrFail($id);
+        $recipe->ingredients()->attach($validatedData['ingredient'], ['quantity' => $validatedData['quantity']]);
+
+        return redirect()->action(
+            'RecipeController@show', ['id' => $id]
+        )->with('success', 'Ingredient was successfully added');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -52,7 +86,9 @@ class RecipeController extends Controller
      */
     public function show($id)
     {
-        //
+        $recipe = Recipe::findOrFail($id);
+        $allIngredients = Ingredient::orderBy('name')->get();
+        return view('recipe.show', compact('recipe', 'allIngredients'));
     }
 
     /**
@@ -63,7 +99,9 @@ class RecipeController extends Controller
      */
     public function edit($id)
     {
-        //
+        $recipe = Recipe::findOrFail($id);
+        $allIngredients = Ingredient::orderBy('name')->get();
+        return view('recipe.edit', compact('recipe', 'allIngredients'));
     }
 
     /**
@@ -75,7 +113,12 @@ class RecipeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $validatedData = $request->validate([
+            'name' => 'required|max:255',
+            'description' => 'required|max:255',
+        ]);
+        Recipe::whereId($id)->update($validatedData);
+        return redirect('/recipes')->with('success', 'Recipe was successfully saved');
     }
 
     /**
@@ -86,6 +129,9 @@ class RecipeController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $recipe = Recipe::findOrFail($id);
+        $recipe->ingredients()->detach();
+        $recipe->delete();
+        return redirect('/recipes')->with('success', 'Recipe was successfully deleted');
     }
 }

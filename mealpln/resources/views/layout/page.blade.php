@@ -8,7 +8,7 @@
         <meta name="description" content="@yield('description')">
         <link href="{{ asset('css/app.css') }}" rel="stylesheet" type="text/css" />
     </head>
-    <body class="pb-4">
+    <body class="pb-5">
         @include('layout.navbar')
         <div class="container mt-4">
             @yield('content')

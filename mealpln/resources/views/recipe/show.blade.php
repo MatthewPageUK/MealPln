@@ -1,38 +1,55 @@
-<!-- ingredient / show.blade.php -->
+<!-- recipe / show.blade.php -->
 
 @extends('layout.page')
 
 @section('title')
-  {{ $ingredient->name }} ~ Ingredient
+  {{ $recipe->name }} ~ recipe
 @endsection
 
 @section('description')
-  {{ $ingredient->description }}
+  {{ $recipe->description }}
 @endsection
 
 @section('content')
 <div class="card">
   <div class="card-header">
-    <h3>{{ $ingredient->name }}</h3>
+    <h3>{{ $recipe->name }}</h3>
   </div>
   <div class="card-body">
-    <p>{{ $ingredient->description }}</p>
-    <p>£{{ $ingredient->priceperunit }}</p>
+    @include('layout.cruderrors')
+    <p>{{ $recipe->description }}</p>
+    
+    <ul class="list-group list-group-flush">
+    @foreach($recipe->ingredients as $ingredient)
+      <li class="list-group-item">
+        <a href="{{ route('ingredients.show', $ingredient->id) }}">{{ $ingredient->pivot->quantity }} x {{ $ingredient->name }}</a>
+        <span class="float-right">
+          <form class="delete" action="{{ route('recipes.deleteingredient', $recipe->id)}}" method="post">
+            @csrf
+            <input type="hidden" name="ingredient" value="{{ $ingredient->id }}">
+            <button class="btn btn-primary" type="submit">Delete</button>
+          </form>
+        </span>
+      </li>
+    @endforeach
+    </ul>
+    <h3>Total price £ {{ $recipe->getPrice() }}</h3>
     <p class="mt-4">
-      <form class="delete" action="{{ route('ingredients.destroy', $ingredient->id)}}" method="post">
+      <form class="delete" action="{{ route('recipes.destroy', $recipe->id)}}" method="post">
         @csrf
         @method('DELETE')
-        <a href="{{ route('ingredients.index')}}" class="btn btn-secondary">Back</a>
-        <a href="{{ route('ingredients.edit',$ingredient->id)}}" class="btn btn-primary">Edit</a>
+        <a href="{{ route('recipes.index')}}" class="btn btn-secondary">Back</a>
+        <a href="{{ route('recipes.edit',$recipe->id)}}" class="btn btn-primary">Edit</a>
         <button class="btn btn-primary" type="submit">Delete</button>
       </form>
     </p>
   </div>
 </div>
+@include('recipe.addingredient')
 <script>
     document.querySelectorAll(".delete").forEach((frm)=>{
       frm.addEventListener('submit', function() {
-        if (!confirm("Delete this ingredient?")) event.preventDefault();
+        if (!confirm("Delete this recipe?")) event.preventDefault();
       });
     });
 </script>

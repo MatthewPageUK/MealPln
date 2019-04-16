@@ -18,6 +18,14 @@
   <div class="card-body">
     <p>{{ $ingredient->description }}</p>
     <p>£{{ $ingredient->priceperunit }}</p>
+    <h4>Used in</h4>
+    <ul class="list-group list-group-flush">
+      @foreach($ingredient->recipes as $recipe)
+      <li class="list-group-item">
+        <a href="{{ route('recipes.show', $recipe->id) }}">{{ $recipe->name }}</a>
+      </li>
+      @endforeach
+    </ul>
     <p class="mt-4">
       <form class="delete" action="{{ route('ingredients.destroy', $ingredient->id)}}" method="post">
         @csrf
