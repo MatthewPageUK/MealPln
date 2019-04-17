@@ -17,6 +17,10 @@ Route::get('/', function () {
 
 Route::post('recipes/{recipe}/addingredient', 'RecipeController@addIngredient')->name('recipes.addingredient');
 Route::post('recipes/{recipe}/deleteingredient', 'RecipeController@deleteIngredient')->name('recipes.deleteingredient');
+Route::post('days/{day}/addrecipe', 'DayController@addRecipe')->name('days.addrecipe');
+
 
 Route::resource('ingredients', 'IngredientController');
 Route::resource('recipes', 'RecipeController');
+Route::resource('meals', 'MealController');
+Route::resource('days', 'DayController');

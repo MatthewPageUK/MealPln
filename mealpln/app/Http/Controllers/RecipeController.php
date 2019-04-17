@@ -37,9 +37,9 @@ class RecipeController extends Controller
         $recipe = Recipe::findOrFail($id);
         $recipe->ingredients()->attach($validatedData['ingredient'], ['quantity' => $validatedData['quantity']]);
 
-        return redirect()->action(
-            'RecipeController@show', ['id' => $id]
-        )->with('success', 'Ingredient was successfully added');
+        return redirect()
+            ->action('RecipeController@edit', ['id' => $id])
+            ->with('success', 'Ingredient was successfully added');
     }
     /**
      * Display a listing of the resource.
@@ -75,7 +75,9 @@ class RecipeController extends Controller
             'description' => 'required|max:255',
         ]);
         $recipe = Recipe::create($validatedData);
-        return redirect('/recipes')->with('success', 'Recipe was successfully saved');
+        $allIngredients = Ingredient::orderBy('name')->get();
+        return view('recipe.edit', compact('recipe', 'allIngredients'));
+        // return redirect('/recipes')->with('success', 'Recipe was successfully saved');
     }
 
     /**

@@ -12,10 +12,10 @@
 
 @section('content')
 <div class="card">
-  <div class="card-header"><h3>Edit Recipe</h3></div>
+  <div class="card-header">
+    <h3>Edit Recipe</h3>
+  </div>
   <div class="card-body">
-
-  @include('layout.cruderrors')
 
   <form method="post" action="{{ route('recipes.update', $recipe->id) }}">
     <div class="form-group">
@@ -31,6 +31,31 @@
     <a href="{{ route('recipes.index')}}" class="btn btn-secondary">Back</a>
     <button type="submit" class="btn btn-primary">Save Recipe</button>
   </form>
+  </div>
 </div>
+
+<div class="card mt-3">
+  <div class="card-header">
+    <h4>Ingredients</h4>
+  </div>
+  <div class="card-body">
+
+    <ul class="list-group list-group-flush">
+      @foreach($recipe->ingredients as $ingredient)
+        <li class="list-group-item">
+          <a href="{{ route('ingredients.show', $ingredient->id) }}">{{ $ingredient->getQuantityInRecipeHuman() }} x {{ $ingredient->name }}</a>
+          <span class="float-right">
+            <form class="delete" action="{{ route('recipes.deleteingredient', $recipe->id)}}" method="post">
+              @csrf
+              <input type="hidden" name="ingredient" value="{{ $ingredient->id }}">
+              <button class="btn btn-primary" type="submit">Delete</button>
+            </form>
+          </span>
+        </li>
+      @endforeach
+    </ul>
+  </div>
+</div>
+
 @include('recipe.addingredient')
 @endsection

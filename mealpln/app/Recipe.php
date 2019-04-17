@@ -22,6 +22,7 @@ class Recipe extends Model
     /**
      * The total price of this recipe
      * 
+     * @return String
      */
     public function getPrice() 
     {
@@ -30,7 +31,7 @@ class Recipe extends Model
         {
             $price += $ingredient->priceperunit * $ingredient->pivot->quantity;
         }
-        return $price;
+        return number_format($price, 2);
     }
 
 }

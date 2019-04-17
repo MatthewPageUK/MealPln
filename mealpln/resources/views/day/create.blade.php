@@ -3,22 +3,24 @@
 @extends('layout.page')
 
 @section('title')
-  Create a new recipe
+  Create a new ingredient
 @endsection
 
 @section('description')
-  Create a new recipe to use in your meals
+  Create a new ingredient to use in your recipes
 @endsection
 
 @section('content')
 
   <div class="card">
+
     <div class="card-header">
-      <h3>Create a new recipe</h3>
+      <h3>Create a new ingredient</h3>
     </div>
+  
     <div class="card-body">
 
-      <form method="post" action="{{ route('recipes.store') }}">
+      <form method="post" action="{{ route('ingredients.store') }}">
 
         <div class="form-group">
           @csrf
@@ -31,13 +33,17 @@
           <input type="text" id="description" class="form-control" name="description" value="{{ old('description') }}"/>
         </div>
 
-        <div>
-          <a href="{{ route('recipes.index') }}" class="btn btn-secondary">Cancel</a>
-          <button type="submit" class="btn btn-primary">Create Recipe</button>
+        <div class="form-group">
+          <label for="priceperunit">Price per unit</label>
+          £ <input type="text" id="priceperunit" class="form-control" name="priceperunit" value="{{ old('priceperunit') }}"/>
         </div>
-        
-      </form>
 
+        <div>
+          <a href="{{ route('ingredients.index') }}" class="btn btn-secondary">Cancel</a>
+          <button type="submit" class="btn btn-primary">Create Ingredient</button>
+        </div>
+
+      </form>
     </div>
   </div>
 

@@ -3,7 +3,7 @@
 @extends('layout.page')
 
 @section('title')
-    Ingredients 
+  Ingredients 
 @endsection
 
 @section('description')
